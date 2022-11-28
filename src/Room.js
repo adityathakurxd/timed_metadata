@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import Stream from './Stream'
 import ChatNdParticipants from './ChatNdParticipants'
 import Controls from './Controls'
+import toast, { Toaster } from 'react-hot-toast';
 
 function Room() {
 
@@ -9,6 +10,7 @@ function Room() {
     <div className='room'>
       <div className='room__streamSpace'>
         <Stream />
+        <Toaster />
         <Controls />
       </div>
       <ChatNdParticipants />

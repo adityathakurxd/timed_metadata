@@ -7,6 +7,7 @@ import {
     HLS_TIMED_METADATA_LOADED,
   } from './HLSController';
 // import { ToastManager } from "../components/Toast/ToastManager";
+import toast, { Toaster } from 'react-hot-toast';
 
 function HlsView() {
     const videoRef = useRef(null)
@@ -24,6 +25,8 @@ function HlsView() {
                 //   setIsVideoLive(false);
                 // });
                 hlsController.on(HLS_TIMED_METADATA_LOADED, ({ payload, ...rest }) => {
+                    let data = payload
+                toast(data);
                   console.log(
                     `%c Payload: ${payload}`,
                     "color:#2b2d42; background:#d80032"

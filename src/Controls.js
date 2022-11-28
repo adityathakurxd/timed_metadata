@@ -18,6 +18,7 @@ import {
   selectIsLocalVideoEnabled,
   selectLocalPeer,
 } from "@100mslive/react-sdk";
+import toast, { Toaster } from 'react-hot-toast';
 
 function Controls() {
   const hmsActions = useHMSActions();
@@ -63,11 +64,12 @@ function Controls() {
     console.log("Metadata try");
     await hmsActions.sendHLSTimedMetadata ([
       {
-        payload: "hello",
+        payload: "Sale is now live!",
         duration: 2,
       },
     ]);
     console.log("Sending Metadata at", new Date().toUTCString());
+    toast('Sending metadata');
   };
 
   return (
@@ -114,7 +116,7 @@ function Controls() {
           disableElevation
             onClick={sendTimedMetadata}
           >
-             Send Metadata
+             Start sale!
           </Button>
         </>
       ) : (
@@ -125,7 +127,7 @@ function Controls() {
           onClick={leaveRoom}
         >
           <LogoutOutlined /> Leave Room
-        </Button>
+        </Button> 
       )}
     </div>
   );
