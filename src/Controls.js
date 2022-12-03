@@ -19,6 +19,8 @@ import {
   selectLocalPeer,
 } from "@100mslive/react-sdk";
 import toast, { Toaster } from 'react-hot-toast';
+import {useNavigate} from 'react-router-dom';
+import React, {useCallback} from 'react';
 
 function Controls() {
   const hmsActions = useHMSActions();
@@ -26,6 +28,9 @@ function Controls() {
   const audioEnabled = useHMSStore(selectIsLocalAudioEnabled);
   const videoEnabled = useHMSStore(selectIsLocalVideoEnabled);
   const localPeer = useHMSStore(selectLocalPeer);
+
+  const navigate = useNavigate();
+  const handleOnClick = useCallback(() => navigate('/cart', {replace: true}), [navigate]);
 
   const startHLSStreaming = async () => {
     try {
@@ -62,15 +67,19 @@ function Controls() {
 
   const sendTimedMetadata = async () => {
     console.log("Metadata try");
+    var data = {"id": 1}
     await hmsActions.sendHLSTimedMetadata ([
       {
-        payload: "Sale is now live!",
+        payload: JSON.stringify(data),
         duration: 2,
       },
     ]);
     console.log("Sending Metadata at", new Date().toUTCString());
     toast('Sending metadata');
   };
+
+  
+
 
   return (
     <div className="controls">
@@ -120,6 +129,7 @@ function Controls() {
           </Button>
         </>
       ) : (
+        <>
         <Button
           variant="contained"
           disableElevation
@@ -128,6 +138,18 @@ function Controls() {
         >
           <LogoutOutlined /> Leave Room
         </Button> 
+        <Button
+            
+            variant="contained"
+          disableElevation
+            onClick={
+           
+           handleOnClick
+            }
+          >
+              View cart
+          </Button>
+        </>
       )}
     </div>
   );

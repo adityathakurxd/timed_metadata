@@ -8,8 +8,12 @@ import {
   } from './HLSController';
 // import { ToastManager } from "../components/Toast/ToastManager";
 import toast, { Toaster } from 'react-hot-toast';
+import { connect } from 'react-redux'
+import { addToCart } from './components/actions/cartActions'
 
 function HlsView() {
+    
+
     const videoRef = useRef(null)
     const hlsState = useHMSStore(selectHLSState)
     const hlsUrl = hlsState.variants[0]?.url
@@ -27,6 +31,7 @@ function HlsView() {
                 hlsController.on(HLS_TIMED_METADATA_LOADED, ({ payload, ...rest }) => {
                     let data = payload
                 toast(data);
+                this.props.addToCart(data.id); 
                   console.log(
                     `%c Payload: ${payload}`,
                     "color:#2b2d42; background:#d80032"
@@ -44,5 +49,18 @@ function HlsView() {
     }, [hlsUrl])
     return <video ref={videoRef} autoPlay controls></video>;
 }
+
+const mapStateToProps = (state)=>{
+    return {
+      items: state.items
+    }
+  }
+const mapDispatchToProps= (dispatch)=>{
+    
+    return{
+        addToCart: (id)=>{dispatch(addToCart(id))}
+    }
+}
+
 
 export default HlsView
