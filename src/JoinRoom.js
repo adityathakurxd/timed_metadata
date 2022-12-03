@@ -1,5 +1,7 @@
 import { React, useState } from "react";
 import { useHMSActions } from "@100mslive/react-sdk";
+import { useHMSStore, selectIsConnectedToRoom } from '@100mslive/react-sdk';
+import { useNavigate } from "react-router-dom"
 
 function JoinRoom() {
   const ENDPOINT = process.env.REACT_APP_TOKEN_ENDPOINT
@@ -8,6 +10,8 @@ function JoinRoom() {
   const [username, setUsername] = useState("")
   const [selectedRole, setSelectedRole] = useState("broadcaster")
   const hmsActions = useHMSActions()
+  const isConnected = useHMSStore(selectIsConnectedToRoom);
+  const navigate = useNavigate()
 
   const handleSubmit = async (e) => {
     e.preventDefault()
@@ -25,7 +29,9 @@ function JoinRoom() {
     hmsActions.join({
       userName: username,
       authToken: token,
-    })
+    }) 
+    navigate(`/live`)
+    
   }
 
   return (

@@ -1,12 +1,11 @@
 import './App.css';
 import JoinRoom from './JoinRoom'
 import Room from './Room';
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom'
+import {BrowserRouter as Router, Route, Routes, Navigate} from 'react-router-dom'
 import './styles.css'
 import { useHMSStore, selectIsConnectedToRoom } from '@100mslive/react-sdk';
 import "./components/Cart"
 import Cart from './components/Cart';
-import { Feed } from '@mui/icons-material';
 
 function App() {
   
@@ -18,14 +17,22 @@ function App() {
    
 
       <Routes>        
-        <Route exact path="/cart" component={Cart}/>  
-        <Route path="/feed" component={Feed}/>     
+        <Route exact path="/" element={<JoinRoom />}/>  
+        <Route
+  exact
+  path="live"
+  element={
+    isConnected ? (
+      <Room />
+    ) : (
+      <Navigate replace to={"/"} />
+    )
+  }
+/>
+        <Route exact path="/cart" element={<Cart />}/>  
       </Routes>  
       <div className="App wrapper"> 
-    {isConnected
-      ? <Room />
-      : <JoinRoom />
-    }
+    
   </div>
     </Router>
 

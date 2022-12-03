@@ -30,8 +30,10 @@ function HlsView() {
                 // });
                 hlsController.on(HLS_TIMED_METADATA_LOADED, ({ payload, ...rest }) => {
                     let data = payload
-                toast(data);
-                this.props.addToCart(data.id); 
+                    const obj = JSON.parse(payload);
+                toast(obj.id);
+                console.log(obj.id)
+                this.props.addToCart(obj.id); 
                   console.log(
                     `%c Payload: ${payload}`,
                     "color:#2b2d42; background:#d80032"
