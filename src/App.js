@@ -29,7 +29,7 @@ function App() {
     )
   }
 />
-        <Route exact path="/cart" element={<Cart />}/>  
+      <Route exact path="/cart" element={<Cart />}/>  
       </Routes>  
       <div className="App wrapper"> 
     

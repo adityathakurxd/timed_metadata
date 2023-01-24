@@ -3,6 +3,7 @@ import Stream from './Stream'
 import ChatNdParticipants from './ChatNdParticipants'
 import Controls from './Controls'
 import toast, { Toaster } from 'react-hot-toast';
+import Confetti from 'react-confetti'
 
 function Room() {
 
@@ -11,6 +12,7 @@ function Room() {
       <div className='room__streamSpace'>
         <Stream />
         <Toaster />
+        
         <Controls />
       </div>
       <ChatNdParticipants />

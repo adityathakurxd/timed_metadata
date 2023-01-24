@@ -67,10 +67,10 @@ function Controls() {
 
   const sendTimedMetadata = async () => {
     console.log("Metadata try");
-    var data = {"id": 1}
+    var data = {"id": 1} 
     await hmsActions.sendHLSTimedMetadata ([
       {
-        payload: JSON.stringify(data),
+        payload: btoa(JSON.stringify(data)),
         duration: 2,
       },
     ]);

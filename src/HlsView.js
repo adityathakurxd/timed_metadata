@@ -1,22 +1,21 @@
 import { selectHLSState, useHMSStore } from '@100mslive/react-sdk'
 import Hls from 'hls.js'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState} from 'react'
 import {
     HLSController,
     HLS_STREAM_NO_LONGER_LIVE,
     HLS_TIMED_METADATA_LOADED,
   } from './HLSController';
 // import { ToastManager } from "../components/Toast/ToastManager";
-import toast, { Toaster } from 'react-hot-toast';
-import { connect } from 'react-redux'
-import { addToCart } from './components/actions/cartActions'
+import toast from 'react-hot-toast';
+import Confetti from 'react-confetti'
 
 function HlsView() {
-    
-
+    // const { width, height } = useWindowSize()
     const videoRef = useRef(null)
     const hlsState = useHMSStore(selectHLSState)
     const hlsUrl = hlsState.variants[0]?.url
+    const [status, setStatus] = useState(false);
     useEffect(() => {
         if (videoRef.current && hlsUrl) {
             const browserHasNativeHLSSupport = videoRef.current.canPlayType(
@@ -29,16 +28,21 @@ function HlsView() {
                 //   setIsVideoLive(false);
                 // });
                 hlsController.on(HLS_TIMED_METADATA_LOADED, ({ payload, ...rest }) => {
-                    let data = payload
-                    const obj = JSON.parse(payload);
+                    
+                    const obj = JSON.parse(atob(payload));
                 toast(obj.id);
+                toast("🥳🥳🥳🥳🥳")
                 console.log(obj.id)
-                this.props.addToCart(obj.id); 
+                
                   console.log(
                     `%c Payload: ${payload}`,
                     "color:#2b2d42; background:#d80032"
                   );
                   console.log(rest);
+                  console.log(status);
+                  setStatus(true)
+                  console.log(status);
+                  // setTimeout(setStatus(false), 5000);
                 //   ToastManager.addToast({
                 //     title: `Payload from timed Metadata ${payload}`,
                 //   });
@@ -48,20 +52,16 @@ function HlsView() {
                 videoRef.current.src = hlsUrl
             }
         }
-    }, [hlsUrl])
-    return <video ref={videoRef} autoPlay controls></video>;
-}
-
-const mapStateToProps = (state)=>{
-    return {
-      items: state.items
-    }
-  }
-const mapDispatchToProps= (dispatch)=>{
+    }, [hlsUrl, setStatus])
+    return ( 
+    <div>
+       {status ? <Confetti
+      width={1200}
+      height={800}
+    /> : null}
+      <video ref={videoRef} autoPlay controls></video>;
     
-    return{
-        addToCart: (id)=>{dispatch(addToCart(id))}
-    }
+   </div>);
 }
 
 
