@@ -46,7 +46,7 @@ export class HLSController {
    */
   setCurrentLevel(currentLevel) {
     const newLevel = this.hls.levels.findIndex(
-      level => level.height === currentLevel.height
+      (level) => level.height === currentLevel.height
     );
     this.hls.currentLevel = newLevel;
   }
@@ -89,7 +89,7 @@ export class HLSController {
 
   // listen for pause, play as well to show not live if paused
   enableTimeUpdateListener() {
-    this.videoRef.current.addEventListener("timeupdate", _ => {
+    this.videoRef.current.addEventListener("timeupdate", (_) => {
       if (this.hls) {
         const videoEl = this.videoRef.current;
         const allowedDelay =
@@ -127,11 +127,11 @@ export class HLSController {
          * filter out only the metadata that have startTime set to future.
          * (i.e) more than the current fragment's startime.
          */
-        const metadataAfterFragStart = metadata.filter(mt => {
+        const metadataAfterFragStart = metadata.filter((mt) => {
           return mt.startTime >= fragStartTime;
         });
 
-        metadataAfterFragStart.forEach(mt => {
+        metadataAfterFragStart.forEach((mt) => {
           const timeDifference = mt.startTime - fragStartTime;
           const fragmentDuration = frag.end - frag.start;
 
@@ -169,21 +169,21 @@ export class HLSController {
     });
   }
 
-//   getHLSConfig() {
-//     if (FeatureFlags.optimiseHLSLatency()) {
-//       // should reduce the latency by around 2-3 more seconds. Won't work well without good internet.
-//       return {
-//         enableWorker: true,
-//         liveSyncDuration: 1,
-//         liveMaxLatencyDuration: 5,
-//         liveDurationInfinity: true,
-//         highBufferWatchdogPeriod: 1,
-//       };
-//     }
-//     return {
-//       enableWorker: true,
-//       maxBufferLength: 20,
-//       backBufferLength: 10,
-//     };
-//   }
+  //   getHLSConfig() {
+  //     if (FeatureFlags.optimiseHLSLatency()) {
+  //       // should reduce the latency by around 2-3 more seconds. Won't work well without good internet.
+  //       return {
+  //         enableWorker: true,
+  //         liveSyncDuration: 1,
+  //         liveMaxLatencyDuration: 5,
+  //         liveDurationInfinity: true,
+  //         highBufferWatchdogPeriod: 1,
+  //       };
+  //     }
+  //     return {
+  //       enableWorker: true,
+  //       maxBufferLength: 20,
+  //       backBufferLength: 10,
+  //     };
+  //   }
 }

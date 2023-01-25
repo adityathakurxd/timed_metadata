@@ -18,9 +18,9 @@ import {
   selectIsLocalVideoEnabled,
   selectLocalPeer,
 } from "@100mslive/react-sdk";
-import toast, { Toaster } from 'react-hot-toast';
-import {useNavigate} from 'react-router-dom';
-import React, {useCallback} from 'react';
+import toast from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
+import React, { useCallback } from "react";
 
 function Controls() {
   const hmsActions = useHMSActions();
@@ -30,7 +30,10 @@ function Controls() {
   const localPeer = useHMSStore(selectLocalPeer);
 
   const navigate = useNavigate();
-  const handleOnClick = useCallback(() => navigate('/cart', {replace: true}), [navigate]);
+  const handleOnClick = useCallback(
+    () => navigate("/cart", { replace: true }),
+    [navigate]
+  );
 
   const startHLSStreaming = async () => {
     try {
@@ -67,19 +70,16 @@ function Controls() {
 
   const sendTimedMetadata = async () => {
     console.log("Metadata try");
-    var data = {"id": 1} 
-    await hmsActions.sendHLSTimedMetadata ([
+    var data = { id: 1 };
+    await hmsActions.sendHLSTimedMetadata([
       {
         payload: btoa(JSON.stringify(data)),
         duration: 2,
       },
     ]);
     console.log("Sending Metadata at", new Date().toUTCString());
-    toast('Sending metadata');
+    toast("Sending metadata");
   };
-
-  
-
 
   return (
     <div className="controls">
@@ -120,34 +120,25 @@ function Controls() {
 
           {/* Timed Metadata */}
           <Button
-            
             variant="contained"
-          disableElevation
+            disableElevation
             onClick={sendTimedMetadata}
           >
-             Start sale!
+            Start sale!
           </Button>
         </>
       ) : (
         <>
-        <Button
-          variant="contained"
-          disableElevation
-          className="leave"
-          onClick={leaveRoom}
-        >
-          <LogoutOutlined /> Leave Room
-        </Button> 
-        <Button
-            
+          <Button
             variant="contained"
-          disableElevation
-            onClick={
-           
-           handleOnClick
-            }
+            disableElevation
+            className="leave"
+            onClick={leaveRoom}
           >
-              View cart
+            <LogoutOutlined /> Leave Room
+          </Button>
+          <Button variant="contained" disableElevation onClick={handleOnClick}>
+            View cart
           </Button>
         </>
       )}

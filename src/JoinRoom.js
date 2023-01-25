@@ -1,20 +1,20 @@
 import { React, useState } from "react";
 import { useHMSActions } from "@100mslive/react-sdk";
-import { useHMSStore, selectIsConnectedToRoom } from '@100mslive/react-sdk';
-import { useNavigate } from "react-router-dom"
+import { useHMSStore, selectIsConnectedToRoom } from "@100mslive/react-sdk";
+import { useNavigate } from "react-router-dom";
 
 function JoinRoom() {
-  const ENDPOINT = process.env.REACT_APP_TOKEN_ENDPOINT
-  const ROOM_ID = process.env.REACT_APP_ROOM_ID
+  const ENDPOINT = process.env.REACT_APP_TOKEN_ENDPOINT;
+  const ROOM_ID = process.env.REACT_APP_ROOM_ID;
 
-  const [username, setUsername] = useState("")
-  const [selectedRole, setSelectedRole] = useState("broadcaster")
-  const hmsActions = useHMSActions()
+  const [username, setUsername] = useState("");
+  const [selectedRole, setSelectedRole] = useState("broadcaster");
+  const hmsActions = useHMSActions();
   const isConnected = useHMSStore(selectIsConnectedToRoom);
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
-    e.preventDefault()
+    e.preventDefault();
     const response = await fetch(`${ENDPOINT}api/token`, {
       method: "POST",
       body: JSON.stringify({
@@ -23,16 +23,15 @@ function JoinRoom() {
         type: "app",
         room_id: ROOM_ID,
       }),
-    })
-    const { token } = await response.json()
+    });
+    const { token } = await response.json();
     // Joining the room
     hmsActions.join({
       userName: username,
       authToken: token,
-    }) 
-    navigate(`/live`)
-    
-  }
+    });
+    navigate(`/live`);
+  };
 
   return (
     <form className="join" onSubmit={handleSubmit}>
@@ -48,7 +47,7 @@ function JoinRoom() {
         required
         value={selectedRole}
         onChange={(e) => setSelectedRole(e.target.value)}
-        placeholder='Select Role'
+        placeholder="Select Role"
       >
         <option>broadcaster</option>
         <option>hls-viewer</option>
