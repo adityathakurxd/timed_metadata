@@ -19,8 +19,7 @@ import {
   selectLocalPeer,
 } from "@100mslive/react-sdk";
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
-import React, { useCallback } from "react";
+import React from "react";
 
 function Controls() {
   const hmsActions = useHMSActions();
@@ -29,11 +28,6 @@ function Controls() {
   const videoEnabled = useHMSStore(selectIsLocalVideoEnabled);
   const localPeer = useHMSStore(selectLocalPeer);
 
-  const navigate = useNavigate();
-  const handleOnClick = useCallback(
-    () => navigate("/cart", { replace: true }),
-    [navigate]
-  );
 
   const startHLSStreaming = async () => {
     try {
@@ -124,7 +118,7 @@ function Controls() {
             disableElevation
             onClick={sendTimedMetadata}
           >
-            Start sale!
+            Start Celebration!
           </Button>
         </>
       ) : (
@@ -137,9 +131,7 @@ function Controls() {
           >
             <LogoutOutlined /> Leave Room
           </Button>
-          <Button variant="contained" disableElevation onClick={handleOnClick}>
-            View cart
-          </Button>
+          
         </>
       )}
     </div>
