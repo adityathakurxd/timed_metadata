@@ -11,7 +11,6 @@ function JoinRoom() {
   const [selectedRole, setSelectedRole] = useState("broadcaster");
   const hmsActions = useHMSActions();
   const isConnected = useHMSStore(selectIsConnectedToRoom);
-  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +29,6 @@ function JoinRoom() {
       userName: username,
       authToken: token,
     });
-    navigate(`/live`);
   };
 
   return (
