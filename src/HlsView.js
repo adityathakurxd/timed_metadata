@@ -3,7 +3,7 @@ import Hls from "hls.js";
 import { useEffect, useRef, useState } from "react";
 import { HLSController, HLS_TIMED_METADATA_LOADED } from "./HLSController";
 // import { ToastManager } from "../components/Toast/ToastManager";
-import toast from "react-hot-toast";
+// import toast from "react-hot-toast";
 import Confetti from "react-confetti";
 
 function HlsView() {
@@ -12,6 +12,7 @@ function HlsView() {
   const hlsState = useHMSStore(selectHLSState);
   const hlsUrl = hlsState.variants[0]?.url;
   const [status, setStatus] = useState(false);
+  
   useEffect(() => {
     if (videoRef.current && hlsUrl) {
       const browserHasNativeHLSSupport = videoRef.current.canPlayType(
@@ -19,12 +20,9 @@ function HlsView() {
       );
       if (Hls.isSupported()) {
         var hlsController = new HLSController(hlsUrl, videoRef);
-        // hlsController.on(HLS_STREAM_NO_LONGER_LIVE, () => {
-        //   setIsVideoLive(false);
-        // });
         hlsController.on(HLS_TIMED_METADATA_LOADED, ({ payload, ...rest }) => {
           const obj = JSON.parse(atob(payload));
-          toast(obj.id);
+          // toast(obj.id);
           console.log(obj.id);
           console.log(
             `%c Payload: ${payload}`,
@@ -39,7 +37,7 @@ function HlsView() {
         videoRef.current.src = hlsUrl;
       }
     }
-  }, [hlsUrl, setStatus]);
+  }, [hlsUrl, setStatus, status]);
   return (
     <div>
       {status ? <Confetti width={1200} height={800} /> : null}

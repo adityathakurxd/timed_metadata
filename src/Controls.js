@@ -64,7 +64,7 @@ function Controls() {
 
   const sendTimedMetadata = async () => {
     console.log("Metadata try");
-    var data = { id: 1 };
+    var data = { triggerConfetti: true };
     await hmsActions.sendHLSTimedMetadata([
       {
         payload: btoa(JSON.stringify(data)),
@@ -118,7 +118,7 @@ function Controls() {
             disableElevation
             onClick={sendTimedMetadata}
           >
-            Start Celebration!
+            Send Metadata
           </Button>
         </>
       ) : (

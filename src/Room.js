@@ -11,7 +11,7 @@ function Room() {
         <Toaster />
         <Controls />
       </div>
-      <ChatNdParticipants />
+      {/* <ChatNdParticipants /> */}
     </div>
   );
 }
