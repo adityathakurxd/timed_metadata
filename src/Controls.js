@@ -64,7 +64,7 @@ function Controls() {
 
   const sendTimedMetadata = async () => {
     console.log("Metadata try");
-    var data = { triggerConfetti: true };
+    var data = { triggerConfetti: false };
     await hmsActions.sendHLSTimedMetadata([
       {
         payload: btoa(JSON.stringify(data)),
