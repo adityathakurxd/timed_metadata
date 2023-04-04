@@ -67,7 +67,7 @@ function Controls() {
     var data = { triggerConfetti: false };
     await hmsActions.sendHLSTimedMetadata([
       {
-        payload: btoa(JSON.stringify(data)),
+        payload: JSON.stringify(data),
         duration: 2,
       },
     ]);
