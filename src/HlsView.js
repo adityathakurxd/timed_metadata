@@ -20,9 +20,7 @@ function HlsView() {
   useEffect(() => {
     if (videoRef && !hmsPlayer) {
       const player = new HMSHLSPlayer(
-        // "https://storage.googleapis.com/shaka-live-assets/player-source.m3u8",
-        // "https://cdn-in.100ms.live/beam/621c44377a9d04e28c60cf85/625581d4a26d2f8ec0707273/20230403/1680520395991/master.m3u8",
-        hlsState.variants[0]?.url,
+        hlsUrl,
         videoRef.current
       );
       setHMSPlayerInstance(player);
