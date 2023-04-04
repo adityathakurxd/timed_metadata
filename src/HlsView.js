@@ -1,15 +1,10 @@
 import { selectHLSState, useHMSStore } from "@100mslive/react-sdk";
-import Hls from "hls.js";
 import { useEffect, useRef, useState } from "react";
 import { HMSHLSPlayer } from "@100mslive/hls-player";
 import { HMSHLSPlayerEvents } from "@100mslive/hls-player";
-import { HLSController, HLS_TIMED_METADATA_LOADED } from "./HLSController";
-// import { ToastManager } from "../components/Toast/ToastManager";
-// import toast from "react-hot-toast";
 import Confetti from "react-confetti";
 
 function HlsView() {
-  // const { width, height } = useWindowSize()
   const videoRef = useRef(null);
   const hlsState = useHMSStore(selectHLSState);
   const hlsUrl = hlsState.variants[0]?.url;
@@ -26,7 +21,7 @@ function HlsView() {
       setHMSPlayerInstance(player);
       player.play();
     }
-  }, [videoRef, setHMSPlayerInstance, hmsPlayer, hlsUrl, setStatus, status]);
+  }, [videoRef, setHMSPlayerInstance, hmsPlayer, hlsUrl]);
 
   // listen to hls player events
   useEffect(() => {
@@ -34,10 +29,12 @@ function HlsView() {
       console.log("adding event listener");
       hmsPlayer?.on(HMSHLSPlayerEvents.TIMED_METADATA_LOADED, (data) => {
         console.log(data);
-        setStatus(data.payload);
+        const receivedData = JSON.parse(data.payload);
+        console.log(receivedData.triggerConfetti);
+        setStatus(receivedData.triggerConfetti);
       });
     }
-  }, [hmsPlayer]);
+  }, [hmsPlayer, setStatus, status]);
 
   return (
     <div>
@@ -46,7 +43,5 @@ function HlsView() {
     </div>
   );
 }
-
-
 
 export default HlsView;
