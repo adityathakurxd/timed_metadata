@@ -18,7 +18,7 @@ function HlsView() {
 
   // initialise HMSPLayer
   useEffect(() => {
-    if (videoRef && !hmsPlayer) {
+    if (videoRef && !hmsPlayer && hlsUrl) {
       const player = new HMSHLSPlayer(
         hlsUrl,
         videoRef.current
@@ -26,7 +26,7 @@ function HlsView() {
       setHMSPlayerInstance(player);
       player.play();
     }
-  }, [videoRef, setHMSPlayerInstance, hmsPlayer]);
+  }, [videoRef, setHMSPlayerInstance, hmsPlayer, hlsUrl, setStatus, status]);
 
   // listen to hls player events
   useEffect(() => {
@@ -34,6 +34,7 @@ function HlsView() {
       console.log("adding event listener");
       hmsPlayer?.on(HMSHLSPlayerEvents.TIMED_METADATA_LOADED, (data) => {
         console.log(data);
+        setStatus(data.payload);
       });
     }
   }, [hmsPlayer]);
